@@ -1,0 +1,17 @@
+<?php
+/**
+ * @package blog-mvc
+ * @author Rtransat
+ */
+
+return [
+    'db' => [
+        'driver' => 'pdo_mysql',
+        'dsn' => 'mysql:dbname=;host=',
+        'username' => '',
+        'password' => '',
+        'driver_options' => [
+            1002 => 'SET NAMES \'UTF8\'',
+        ],
+    ],
+];
