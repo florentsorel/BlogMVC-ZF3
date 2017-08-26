@@ -1,0 +1,86 @@
+<?= $this->doctype(); ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php if (!empty($this->metaTitle)) {
+        $this->plugin('headTitle')->prepend($this->metaTitle);
+    } ?>
+
+    <?= $this->headTitle(), $this->headMeta(), $this->headLink(), $this->headScript(); ?>
+
+    <?php if (!empty($this->metaDescription)) : ?>
+        <meta name="description" content="<?= $this->escapeHtml($this->metaDescription); ?>"/>
+    <?php endif; ?>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?= $this->url('application') ?>">Blog</a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li><a href="login.html">Admin</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+
+    <?= $this->flashMessages()->getAllMessages(); ?>
+
+    <div class="row">
+        <div class="col-md-8">
+            <?= $this->content ?>
+        </div>
+
+        <div class="col-md-4 sidebar">
+
+            <h4>Categories</h4>
+            <div class="list-group">
+                <a href="category.html" class="list-group-item">
+                    <span class="badge">14</span>
+                    Category #1
+                </a>
+                <a href="category.html" class="list-group-item">
+                    <span class="badge">5</span>
+                    Category #2
+                </a>
+                <a href="category.html" class="list-group-item">
+                    <span class="badge">1</span>
+                    Category #3
+                </a>
+                <a href="category.html" class="list-group-item">
+                    <span class="badge">7</span>
+                    Category #4
+                </a>
+            </div>
+
+            <h4>Last posts</h4>
+            <div class="list-group">
+                <a href="post.html" class="list-group-item">
+                    The Route of All Evil
+                </a>
+                <a href="post.html" class="list-group-item">
+                    Good news everyone !
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<?= $this->inlineScript() ?>
+
+</body>
+</html>

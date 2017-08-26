@@ -15,6 +15,7 @@ return [
         'Zend\Db',
         'Zend\Router',
         'Zend\Validator',
+        'Shared',
         'Application',
     ],
 
