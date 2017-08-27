@@ -26,6 +26,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Shared\\": "module/Shared/src/",
             "Application\\": "module/Application/src/"
         }
     },
