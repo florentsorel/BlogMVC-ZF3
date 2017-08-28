@@ -18,7 +18,9 @@
         "zendframework/zend-db": "^2.8",
         "zendframework/zend-mvc-plugins": "^1.0",
         "zendframework/zend-session": "^2.8",
-        "zendframework/zend-form": "^2.10"
+        "zendframework/zend-form": "^2.10",
+        "nesbot/carbon": "^1.22",
+        "tightenco/collect": "^5.4"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "^1.1",

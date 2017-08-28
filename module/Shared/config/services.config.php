@@ -7,13 +7,11 @@
 namespace Shared;
 
 return [
-    'alias' => [
+    'aliases' => [
         'db' => \Zend\Db\Adapter\Adapter::class,
     ],
     'invokables' => [
+        \Zend\Db\Adapter\Adapter::class,
         \Zend\Authentication\AuthenticationService::class,
     ],
-    'factories' => [
-
-    ]
 ];
