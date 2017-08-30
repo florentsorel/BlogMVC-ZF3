@@ -14,7 +14,7 @@
                     by <a href="index.html"><?= $post->getAuthor() ?></a> on <em><?= $post->getCreationDate()->format('M dS Y') ?></em>
                 </small></p>
             <p><?= $this->markdown($post->getContent()) ?></p>
-            <p class="text-right"><a href="post.html" class="btn btn-primary">Read more...</a></p>
+            <p class="text-right"><a href="<?= $this->url('post', ['slug' => $post->getslug()]) ?>" class="btn btn-primary">Read more...</a></p>
         </article>
 
         <hr>
