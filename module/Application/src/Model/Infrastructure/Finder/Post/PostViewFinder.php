@@ -7,13 +7,12 @@
 namespace Application\Model\Infrastructure\Finder\Post;
 
 
-use Application\Model\Infrastructure\View\Post\PostListItemView;
+use Application\Model\Infrastructure\View\Post\PostView;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Shared\Model\Domain\Common\Slug;
 use Zend\Db\Adapter\Adapter;
 
-class PostListItemViewFinder
+class PostViewFinder
 {
     /** @var \Zend\Db\Adapter\Adapter */
     private $db;
@@ -27,11 +26,12 @@ class PostListItemViewFinder
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @param \Shared\Model\Domain\Common\Slug $slug
+     * @return \Application\Model\Infrastructure\View\Post\PostView|null
      */
-    public function findAll()
+    public function findBySlug(Slug $slug)
     {
-        $select = <<<SQL
+        $sql = <<<SQL
             SELECT
                 `Post`.*,
                 `User`.`username` as `author`,
@@ -42,46 +42,40 @@ class PostListItemViewFinder
                 ON `User`.idUser = `Post`.idUser
             INNER JOIN `Category`
                 ON `Category`.idCategory = `Post`.idCategory
-            ORDER BY `Post`.creationDate DESC
+            WHERE `Post`.slug = :slug
+            LIMIT 1
 SQL;
 
-        $statement = $this->db->createStatement($select);
-        $queryResult = $statement->execute();
-
-        $collection = new Collection();
+        $statement = $this->db->createStatement($sql);
+        $queryResult = $statement->execute([
+            'slug' => $slug->toString()
+        ]);
 
         if ($queryResult->isQueryResult() === false
             || $queryResult->count() < 1
         ) {
-            return $collection;
+            return null;
         }
 
-        foreach($queryResult as $row) {
-            $collection->push(
-                $this->createPostListItemView($row)
-            );
-        }
-
-        return $collection;
+        return $this->createPostView($queryResult->current());
     }
 
     /**
      * @param array $data
-     * @return \Application\Model\Infrastructure\View\Post\PostListItemView
+     * @return \Application\Model\Infrastructure\View\Post\PostView
      */
-    private function createPostListItemView(array $data)
+    private function createPostView(array $data)
     {
         $creationDate = Carbon::createFromFormat(
             'Y-m-d H:i:s',
             $data['creationDate']
         );
 
-        $postView = new PostListItemView(
+        $postView = new PostView(
             (int)$data['idPost'],
             (int)$data['idUser'],
             $data['author'],
             $data['name'],
-            Slug::createFromString($data['slug']),
             $data['category'],
             Slug::createFromString($data['categorySlug']),
             $data['content'],

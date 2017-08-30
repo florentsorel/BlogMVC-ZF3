@@ -4,12 +4,13 @@
  * @author Rtransat
  */
 
-namespace Application\Model\Infrastructure\Finder\Post;
+namespace Application\Model\Application\Query\Post;
 
 
+use Application\Model\Infrastructure\Finder\Post\PostViewFinder;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class PostListItemViewFinderFactory implements FactoryInterface
+class FindPostFactory implements FactoryInterface
 {
 
     /**
@@ -18,13 +19,15 @@ class PostListItemViewFinderFactory implements FactoryInterface
      * @param  \Interop\Container\ContainerInterface $container
      * @param  string $requestedName
      * @param  null|array $options
-     * @return \Application\Model\Infrastructure\Finder\Post\PostListItemViewFinder
+     * @return \Application\Model\Application\Query\Post\FindPost
      */
     public function __invoke(
         \Interop\Container\ContainerInterface $container,
         $requestedName,
         array $options = null
     ) {
-        return new PostListItemViewFinder($container->get('db'));
+        return new FindPost(
+            $container->get(PostViewFinder::class)
+        );
     }
 }

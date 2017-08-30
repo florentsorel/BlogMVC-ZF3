@@ -20,7 +20,8 @@
         "zendframework/zend-session": "^2.8",
         "zendframework/zend-form": "^2.10",
         "nesbot/carbon": "^1.22",
-        "tightenco/collect": "^5.4"
+        "tightenco/collect": "^5.4",
+        "cebe/markdown": "^1.1"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "^1.1",

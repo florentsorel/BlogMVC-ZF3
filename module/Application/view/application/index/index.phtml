@@ -8,12 +8,12 @@
     /** @var \Application\Model\Infrastructure\View\Post\PostListItemView $post */
     foreach($this->posts as $post): ?>
         <article>
-            <h2><a href="post.html"><?= $post->getName() ?></a></h2>
+            <h2><a href="<?= $this->url('post', ['slug' => $post->getslug()]) ?>"><?= $post->getName() ?></a></h2>
             <p><small>
                     Category : <a href="category.html"><?= $post->getCategory() ?></a>,
                     by <a href="index.html"><?= $post->getAuthor() ?></a> on <em><?= $post->getCreationDate()->format('M dS Y') ?></em>
                 </small></p>
-            <p><?= $post->getContent() ?></p>
+            <p><?= $this->markdown($post->getContent()) ?></p>
             <p class="text-right"><a href="post.html" class="btn btn-primary">Read more...</a></p>
         </article>
 

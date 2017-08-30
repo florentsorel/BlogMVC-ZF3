@@ -6,18 +6,31 @@
 
 namespace Application;
 
-use Zend\Router\Http\Literal;
 
 return [
     'router' => [
         'routes' => [
             'application' => [
-                'type' => Literal::class,
+                'type' => \Zend\Router\Http\Literal::class,
                 'options' => [
-                    'route'    => '/',
+                    'route' => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+            ],
+            'post' => [
+                'type' => \Zend\Router\Http\Segment::class,
+                'options' => [
+                    'route' => '/:slug',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'read',
+                    ],
+                    'constraints' => [
+                        'slug' => '[a-z0-9-]+',
                     ],
                 ],
             ],
