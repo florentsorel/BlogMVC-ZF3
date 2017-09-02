@@ -8,6 +8,7 @@ namespace Shared;
 
 use Shared\Listener\ConfigureLayoutListener;
 use Zend\EventManager\EventInterface;
+use Zend\I18n\View\Helper\Plural;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -57,5 +58,12 @@ class Module implements
 
         $configureLayoutListener = new ConfigureLayoutListener($serviceManager);
         $configureLayoutListener->attach($eventManager, 2);
+
+        /** @var \Zend\I18n\View\Helper\Plural $pluralViewHelper */
+        $pluralViewHelper = $serviceManager
+            ->get('ViewHelperManager')
+            ->get(Plural::class);
+        $pluralViewHelper->setPluralRule('nplurals=2; plural=(n==0 || n==1 ? 0 : 1)');
+
     }
 }

@@ -10,7 +10,7 @@ namespace Application\Model\Infrastructure\View\Post;
 class PostView
 {
     /** @var int */
-    private $postId;
+    private $id;
 
     /** @var int */
     private $userId;
@@ -33,8 +33,17 @@ class PostView
     /** @var \Carbon\Carbon */
     private $creationDate;
 
+    /** @var null|array */
+    private $commentIds;
+
+    /** @var null|\Illuminate\Support\Collection */
+    private $comments;
+
+    /** @var int */
+    private $totalComment;
+
     /**
-     * @param int $postId
+     * @param int $id
      * @param int $userId
      * @param string $author
      * @param string $name
@@ -44,7 +53,7 @@ class PostView
      * @param \Carbon\Carbon $creationDate
      */
     public function __construct(
-        $postId,
+        $id,
         $userId,
         $author,
         $name,
@@ -53,7 +62,7 @@ class PostView
         $content,
         \Carbon\Carbon $creationDate
     ) {
-        $this->postId = $postId;
+        $this->id = $id;
         $this->userId = $userId;
         $this->author = $author;
         $this->name = $name;
@@ -66,9 +75,9 @@ class PostView
     /**
      * @return int
      */
-    public function getPostId()
+    public function getId()
     {
-        return $this->postId;
+        return $this->id;
     }
 
     /**
@@ -125,5 +134,53 @@ class PostView
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCommentIds()
+    {
+        return $this->commentIds;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasComments()
+    {
+        return $this->getCommentIds() !== null;
+    }
+
+    /**
+     * @param array $commentIds
+     */
+    public function setCommentIds($commentIds)
+    {
+        $this->commentIds = $commentIds;
+    }
+
+    /**
+     * @return null|\Illuminate\Support\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCommentCount()
+    {
+        return $this->hasComments() ? count($this->getComments()) : 0;
     }
 }

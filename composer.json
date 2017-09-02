@@ -21,7 +21,8 @@
         "zendframework/zend-form": "^2.10",
         "nesbot/carbon": "^1.22",
         "tightenco/collect": "^5.4",
-        "cebe/markdown": "^1.1"
+        "cebe/markdown": "^1.1",
+        "zendframework/zend-i18n": "^2.7"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "^1.1",

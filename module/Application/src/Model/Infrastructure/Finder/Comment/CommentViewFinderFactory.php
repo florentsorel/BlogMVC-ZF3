@@ -4,14 +4,12 @@
  * @author Rtransat
  */
 
-namespace Application\Model\Application\Query\Post;
+namespace Application\Model\Infrastructure\Finder\Comment;
 
 
-use Application\Model\Infrastructure\Finder\Comment\CommentViewFinder;
-use Application\Model\Infrastructure\Finder\Post\PostViewFinder;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class FindPostFactory implements FactoryInterface
+class CommentViewFinderFactory implements FactoryInterface
 {
 
     /**
@@ -20,16 +18,13 @@ class FindPostFactory implements FactoryInterface
      * @param  \Interop\Container\ContainerInterface $container
      * @param  string $requestedName
      * @param  null|array $options
-     * @return \Application\Model\Application\Query\Post\FindPost
+     * @return \Application\Model\Infrastructure\Finder\Comment\CommentViewFinder
      */
     public function __invoke(
         \Interop\Container\ContainerInterface $container,
         $requestedName,
         array $options = null
     ) {
-        return new FindPost(
-            $container->get(PostViewFinder::class),
-            $container->get(CommentViewFinder::class)
-        );
+        return new CommentViewFinder($container->get('db'));
     }
 }

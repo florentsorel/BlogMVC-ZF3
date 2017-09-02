@@ -36,13 +36,18 @@ class PostViewFinder
                 `Post`.*,
                 `User`.`username` as `author`,
                 `Category`.name as `category`,
-                `Category`.slug as `categorySlug`
+                `Category`.slug as `categorySlug`,
+                GROUP_CONCAT(`Comment`.idComment) AS `commentIds`,
+                COUNT(`Comment`.idComment) as totalComment
             FROM `Post`
             INNER JOIN `User`
                 ON `User`.idUser = `Post`.idUser
             INNER JOIN `Category`
                 ON `Category`.idCategory = `Post`.idCategory
+            LEFT JOIN `Comment`
+                ON `Comment`.idPost = `Post`.idPost
             WHERE `Post`.slug = :slug
+            GROUP BY `Post`.idPost
             LIMIT 1
 SQL;
 
@@ -81,6 +86,11 @@ SQL;
             $data['content'],
             $creationDate
         );
+
+        if ($data['commentIds'] !== null) {
+            $commentIds = explode(',', $data['commentIds']);
+            $postView->setCommentIds($commentIds);
+        }
 
         return $postView;
     }

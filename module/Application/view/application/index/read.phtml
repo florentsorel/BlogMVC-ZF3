@@ -38,25 +38,20 @@
         </div>
     </form>
 
-    <h3>2 Commentaires</h3>
+    <h3><?= $post->getCommentCount() . ' ' . $this->plural(['Comment', 'Comments'], $post->getCommentCount()) ?></h3>
 
-    <div class="row">
-        <div class="col-md-2">
-            <img src="http://lorempicsum.com/futurama/100/100/4" width="100%">
-        </div>
-        <div class="col-md-10">
-            <p><strong>Username</strong> 10 hours ago</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, laudantium voluptatibus quae doloribus dolorem earum dicta quasi. Fugit, eligendi, voluptatibus corporis deleniti perferendis accusantium totam harum dolor ab veniam laudantium!</p>
-        </div>
-    </div>
-    <div class="row">
-        <hr>
-        <div class="col-md-2">
-            <img src="http://lorempicsum.com/futurama/100/100/5" width="100%">
-        </div>
-        <div class="col-md-10">
-            <p><strong>Username</strong> 11 days ago</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, laudantium voluptatibus quae doloribus dolorem earum dicta quasi. Fugit, eligendi, voluptatibus corporis deleniti perferendis accusantium totam harum dolor ab veniam laudantium!</p>
-        </div>
-    </div>
+    <?php if ($post->hasComments()): ?>
+        <?php foreach($post->getComments() as $comment): /** @var \Application\Model\Infrastructure\View\Post\CommentView $comment */ ?>
+            <div class="row">
+                <?= ($comment !== $post->getComments()->first()) ? '<hr>' : '' ?>
+                <div class="col-md-2">
+                    <img src="http://lorempicsum.com/futurama/100/100/4" width="100%">
+                </div>
+                <div class="col-md-10">
+                    <p><strong><?= $comment->getUsername() ?></strong> <?= $comment->getCreationDateToString() ?></p>
+                    <p><?= $comment->getContent() ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </section>
